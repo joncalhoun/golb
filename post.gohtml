@@ -30,7 +30,13 @@
   <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
     <div class="px-4 py-4 sm:px-0">
       <h1 class="text-3xl font-bold">{{ .Title }}</h1>
-      <p class="text-gray-500">By {{ .Author }}</p>
+      {{with .Author}}
+        <div class="mb-6">
+          <p class="text-gray-500">
+            Author: <a href="mailto:{{.Email}}">{{.Name}}</a>
+          </p>
+        </div>
+      {{end}}
       <div class="prose">
         {{ .Content }}
       </div>
