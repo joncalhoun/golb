@@ -18,6 +18,16 @@ type Reader interface {
 
 ::: This is the title of the aside
 This is some extra side content that is relevant, but not necessary to enjoy the blog post.
+
+```go
+fmt.Println("There can also be code inside the aside block")
+```
+
+As well as things like
+
+> A block quote with `inline-code` and **bold** text.
+
+Hopefully it all works eventually.
 :::
 
 
