@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ .Title }}</title>
-  <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+  <link rel="stylesheet" href="/assets/styles.css">
 </head>
 
 <body class="bg-gray-100">
@@ -37,7 +37,7 @@
           </p>
         </div>
       {{end}}
-      <div class="prose">
+      <div class="prose !max-w-none">
         {{ .Content }}
       </div>
     </div>

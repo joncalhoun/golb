@@ -165,7 +165,7 @@ func (rend *AsideBlockHTMLRenderer) RegisterFuncs(reg renderer.NodeRendererFuncR
 func (rend *AsideBlockHTMLRenderer) render(w util.BufWriter, source []byte, n ast.Node, entering bool) (ast.WalkStatus, error) {
 	if asideBlock, ok := n.(*AsideBlock); ok && entering {
 		// TODO: Watch for injection?
-		fmt.Fprintf(w, `<aside class="bg-blue-100 pt-4 pb-2 px-4 border-t-4 border-blue-400"><span class="font-semibold text-lg">%s</span>`, asideBlock.Title)
+		fmt.Fprintf(w, `<aside><h4>%s</h4>`, asideBlock.Title)
 		return ast.WalkContinue, nil
 	}
 	fmt.Fprintf(w, "</aside>")
