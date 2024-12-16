@@ -17,10 +17,6 @@ import (
 	highlighting "github.com/yuin/goldmark-highlighting/v2"
 )
 
-type IndexData struct {
-	Posts []PostMetadata
-}
-
 type PostMetadata struct {
 	Slug        string
 	Title       string    `toml:"title"`
@@ -127,6 +123,24 @@ func PostHandler(sl SlugReader, tpl *template.Template) http.HandlerFunc {
 }
 
 func IndexHandler(mq MetadataQuerier, tpl *template.Template) http.HandlerFunc {
+	type Link struct {
+		Text string
+		Href string
+	}
+	type PaginationItem struct {
+		Link     Link
+		Active   bool
+		Ellipsis bool
+	}
+	type IndexData struct {
+		Posts      []PostMetadata
+		Pagination struct {
+			Previous string
+			Next     string
+			Items    []PaginationItem
+		}
+	}
+
 	return func(w http.ResponseWriter, r *http.Request) {
 		posts, err := mq.Query()
 		if err != nil {
@@ -137,6 +151,19 @@ func IndexHandler(mq MetadataQuerier, tpl *template.Template) http.HandlerFunc {
 		data := IndexData{
 			Posts: posts,
 		}
+		// Fake this for demo purposes
+		data.Pagination.Previous = ""
+		data.Pagination.Next = "?page=2"
+		data.Pagination.Items = []PaginationItem{
+			{Link: Link{Text: "1", Href: "?page=1"}, Active: true},
+			{Link: Link{Text: "2", Href: "?page=2"}},
+			{Link: Link{Text: "3", Href: "?page=3"}},
+			{Link: Link{Text: "4", Href: "?page=4"}},
+			{Link: Link{Text: "5", Href: "?page=5"}},
+			{Ellipsis: true},
+			{Link: Link{Text: "10", Href: "?page=10"}},
+		}
+
 		err = tpl.Execute(w, data)
 		if err != nil {
 			log.Printf("Error: %v", err)
